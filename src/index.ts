@@ -2,12 +2,13 @@
 
 import { CoordPolygon, CoordLinestring } from './Geometry';
 
+
 export * from "./Model";
 export * from './Stream';
 export * from './Geometry';
 export * from './Transform';
 
-
+export * from './util';
 
 
 
