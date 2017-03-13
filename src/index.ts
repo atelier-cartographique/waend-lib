@@ -8,8 +8,47 @@ export * from './Stream';
 export * from './Geometry';
 export * from './Transform';
 
-export * from './util';
+// import {
+//     getModelName,
+//     copy,
+//     pathKey,
+//     isZero,
+//     vecDist,
+//     vecAdd,
+//     vecEquals,
+//     lineAngle,
+//     transformExtent,
+//     polygonTransform,
+//     lineTransform,
+//     polygonFloor,
+//     lineFloor,
+//     Proj3857,
+//     projectExtent,
+//     unprojectExtent,
+//     polygonProject,
+//     lineProject
+// }  from './util';
 
+// export const util = {
+//     getModelName,
+//     copy,
+//     pathKey,
+//     isZero,
+//     vecDist,
+//     vecAdd,
+//     vecEquals,
+//     lineAngle,
+//     transformExtent,
+//     polygonTransform,
+//     lineTransform,
+//     polygonFloor,
+//     lineFloor,
+//     Proj3857,
+//     projectExtent,
+//     unprojectExtent,
+//     polygonProject,
+//     lineProject
+// };
 
 
 // painting
