@@ -8,6 +8,7 @@ export * from './Geometry';
 export * from './Stream';
 export * from './Transform';
 export * from "./Model";
+export * from "./Worker";
 
 
 // painting

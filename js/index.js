@@ -8,3 +8,4 @@ __export(require("./Geometry"));
 __export(require("./Stream"));
 __export(require("./Transform"));
 __export(require("./Model"));
+__export(require("./Worker"));

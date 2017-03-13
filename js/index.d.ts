@@ -4,6 +4,7 @@ export * from './Geometry';
 export * from './Stream';
 export * from './Transform';
 export * from "./Model";
+export * from "./Worker";
 export declare type ImageAdjust = 'none' | 'fit' | 'cover';
 export interface ImageOptions {
     image: string;
