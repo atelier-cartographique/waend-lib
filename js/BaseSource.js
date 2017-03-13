@@ -73,4 +73,4 @@ class BaseSource extends events_1.EventEmitter {
         return features;
     }
 }
-exports.default = BaseSource;
+exports.BaseSource = BaseSource;

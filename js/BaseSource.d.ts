@@ -3,7 +3,7 @@
 import { EventEmitter } from 'events';
 import { Extent } from './Geometry';
 import { GeoModel } from './Model';
-export default class BaseSource<T extends GeoModel> extends EventEmitter {
+export declare class BaseSource<T extends GeoModel> extends EventEmitter {
     private tree;
     private index;
     private features;

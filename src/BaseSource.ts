@@ -11,7 +11,7 @@ interface RBushItem extends rbush.BBox {
     id: string;
 }
 
-export default class BaseSource<T extends GeoModel> extends EventEmitter {
+export class BaseSource<T extends GeoModel> extends EventEmitter {
     private tree: rbush.RBush<RBushItem>;
     private index: Index;
     private features: Array<T>

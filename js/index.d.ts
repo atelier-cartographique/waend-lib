@@ -1,8 +1,9 @@
 import { CoordPolygon, CoordLinestring } from './Geometry';
-export * from "./Model";
-export * from './Stream';
+export * from './BaseSource';
 export * from './Geometry';
+export * from './Stream';
 export * from './Transform';
+export * from "./Model";
 export declare type ImageAdjust = 'none' | 'fit' | 'cover';
 export interface ImageOptions {
     image: string;
