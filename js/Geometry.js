@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = require("./util/index");
 const turf_1 = require("@turf/turf");
 const helpers_1 = require("@turf/helpers");
+function copy(data) {
+    return JSON.parse(JSON.stringify(data));
+}
 function geomToFeature(geom) {
     return {
         type: "Feature",
@@ -14,13 +16,13 @@ function geomToFeature(geom) {
 class Geometry {
     constructor(data) {
         if (data instanceof Geometry) {
-            this.geometry = index_1.copy(data.geometry);
+            this.geometry = copy(data.geometry);
         }
         else if ('geometry' in data) {
-            this.geometry = index_1.copy(data.geometry);
+            this.geometry = copy(data.geometry);
         }
         else if ('type' in data) {
-            this.geometry = index_1.copy(data);
+            this.geometry = copy(data);
         }
         else {
             throw (new Error('CanNotBuildGeometry'));
@@ -33,25 +35,25 @@ class Geometry {
         return this.geometry.type;
     }
     getCoordinates() {
-        return index_1.copy(this.geometry.coordinates);
+        return copy(this.geometry.coordinates);
     }
     getExtent() {
         return (new Extent(turf_1.bbox(geomToFeature(this.geometry))));
     }
     toGeoJSON() {
-        return index_1.copy(this.geometry);
+        return copy(this.geometry);
     }
 }
 exports.Geometry = Geometry;
 class Point extends Geometry {
     getCoordinates() {
-        return index_1.copy(this.geometry.coordinates);
+        return copy(this.geometry.coordinates);
     }
 }
 exports.Point = Point;
 class LineString extends Geometry {
     getCoordinates() {
-        return index_1.copy(this.geometry.coordinates);
+        return copy(this.geometry.coordinates);
     }
     appendCoordinate(opt_point) {
         const p = new Point(opt_point);
@@ -63,7 +65,7 @@ class LineString extends Geometry {
 exports.LineString = LineString;
 class Polygon extends Geometry {
     getCoordinates() {
-        return index_1.copy(this.geometry.coordinates);
+        return copy(this.geometry.coordinates);
     }
 }
 exports.Polygon = Polygon;
@@ -81,14 +83,14 @@ class Extent {
             this.extent = [e.left, e.top, e.right, e.bottom];
         }
         else {
-            this.extent = index_1.copy(extent);
+            this.extent = copy(extent);
         }
     }
     getArray() {
-        return index_1.copy(this.extent);
+        return copy(this.extent);
     }
     getCoordinates() {
-        return index_1.copy(this.extent);
+        return copy(this.extent);
     }
     getDictionary() {
         return {

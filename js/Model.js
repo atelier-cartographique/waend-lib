@@ -3,7 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lodash_1 = require("lodash");
 const events_1 = require("events");
 const Geometry_1 = require("./Geometry");
-const util_1 = require("./util");
+function pathKey(objOpt, pathOpt, def) {
+    const path = pathOpt.split('.');
+    let obj = objOpt;
+    for (let i = 0, len = path.length; i < len; i++) {
+        if (!obj || (typeof obj !== 'object')) {
+            return def;
+        }
+        const p = path[i];
+        obj = obj[p];
+    }
+    if (obj === undefined) {
+        return def;
+    }
+    return obj;
+}
+exports.pathKey = pathKey;
 class Model extends events_1.EventEmitter {
     constructor(data) {
         super();
@@ -14,7 +29,7 @@ class Model extends events_1.EventEmitter {
         return (prop in this.data.properties);
     }
     get(key, def) {
-        return util_1.pathKey(this.data.properties, key, def);
+        return pathKey(this.data.properties, key, def);
     }
     getData() {
         return JSON.parse(JSON.stringify(this.data.properties));

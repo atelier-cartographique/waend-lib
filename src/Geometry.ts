@@ -1,9 +1,12 @@
 
 import * as GeoJSON from 'geojson';
-import { copy } from "./util/index";
 import { bbox, bboxPolygon } from "@turf/turf";
 import { point as turfPoint } from "@turf/helpers";
 
+
+function copy<T>(data: T): T {
+    return JSON.parse(JSON.stringify(data));
+}
 
 export type JSONGeometry =
     GeoJSON.Point

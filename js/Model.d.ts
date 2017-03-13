@@ -1,6 +1,7 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
 import { GeomOpt, Geometry, JSONGeometry, Extent } from './Geometry';
+export declare function pathKey(objOpt: any, pathOpt: string, def: any): any;
 export interface ModelProperties {
     [propName: string]: any;
 }

@@ -12,9 +12,24 @@
 import { difference, isEqual } from 'lodash';
 import { EventEmitter } from 'events';
 import { GeomOpt, Geometry, JSONGeometry, Extent } from './Geometry';
-// import * as debug from 'debug';
-import { pathKey } from "./util";
-// const logger = debug('waend:Model');
+
+
+export function pathKey(objOpt: any, pathOpt: string, def: any): any {
+    const path = pathOpt.split('.');
+    let obj: any = objOpt;
+    for (let i = 0, len = path.length; i < len; i++) {
+        if (!obj || (typeof obj !== 'object')) {
+            return def;
+        }
+        const p = path[i];
+        obj = obj[p];
+    }
+    if (obj === undefined) {
+        return def;
+    }
+    return obj;
+}
+
 
 
 // TODO spec params and style interfaces
