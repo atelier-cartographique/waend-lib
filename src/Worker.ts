@@ -42,7 +42,7 @@ export interface ResponseFrame {
 type Response = ResponseAck | ResponseFrame;
 
 
-export default class WaendWorker extends EventEmitter {
+export class WaendWorker extends EventEmitter {
     private worker: Worker;
 
 

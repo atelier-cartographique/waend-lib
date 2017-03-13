@@ -31,7 +31,7 @@ export interface ResponseFrame {
     id: string;
     instructions: PainterCommand[];
 }
-export default class WaendWorker extends EventEmitter {
+export declare class WaendWorker extends EventEmitter {
     private url;
     private worker;
     constructor(url: string);

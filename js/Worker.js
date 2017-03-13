@@ -42,4 +42,4 @@ class WaendWorker extends events_1.EventEmitter {
         return handler;
     }
 }
-exports.default = WaendWorker;
+exports.WaendWorker = WaendWorker;
