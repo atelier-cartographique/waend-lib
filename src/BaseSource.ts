@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import * as rbush from 'rbush';
 import { EventEmitter } from 'events';
 import { Extent } from './Geometry';
@@ -35,7 +34,7 @@ export default class BaseSource<T extends GeoModel> extends EventEmitter {
         this.index[f.id] = this.features.length - 1;
         if (!skipSpatialIndex) {
             const geom = f.getGeometry();
-            const extent = _.assign({ id: f.id }, geom.getExtent().getDictionary());
+            const extent = Object.assign({ id: f.id }, geom.getExtent().getDictionary());
             this.tree.insert(extent);
         }
         this.emit('add', f);
@@ -77,7 +76,7 @@ export default class BaseSource<T extends GeoModel> extends EventEmitter {
             if (opt_extent instanceof Extent) {
                 extent = opt_extent.getDictionary();
             }
-            else if (_.isArray(opt_extent)) { // we assume [minx, miny, maxx, maxy]
+            else if (Array.isArray(opt_extent)) { // we assume [minx, miny, maxx, maxy]
                 extent = (new Extent(opt_extent)).getDictionary();
             }
             else { // proper rbush dictionary?

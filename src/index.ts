@@ -1,82 +1,14 @@
 
-import Context from './Context';
-import Stream from './Stream';
-import { ModelData } from "./Model";
 
-export enum ContextIndex {
-    SHELL = 0,
-    USER,
-    GROUP,
-    LAYER,
-    FEATURE,
-}
+import { CoordPolygon, CoordLinestring } from './Geometry';
 
-export type ContextOrNull = Context | null;
-
-export interface Span {
-    text: string;
-    fragment?: Element;
-    commands?: string[];
-}
-
-export type SpanPack = Span[];
-export type PackPage = SpanPack[];
-
-export interface ICommand {
-    name: string;
-    command: <T>(ctx: Context, args: string[]) => Promise<T>;
-}
-
-export interface ISys {
-    stdin: Stream;
-    stdout: Stream;
-    stderr: Stream;
-}
-
-export interface ITermCommand {
-
-}
-
-export interface ITerminal {
-    capabilities: string[];
-}
-
-export interface IChannel {
-    type: string;
-    id: string;
-}
-
-export type ISyncEvent = 'update' | 'create' | 'delete';
-
-export interface ISyncMessage {
-    channel: IChannel;
-    event: ISyncEvent;
-    data: ModelData | string;
-}
+export * from "./Model";
+export * from './Stream';
+export * from './Geometry';
 
 
-export interface IEventChangeContext {
-    index: ContextIndex;
-    path: string[];
-}
 
-export type JSONGeometry =
-    GeoJSON.Point
-    | GeoJSON.LineString
-    | GeoJSON.Polygon;
 
-export type Coordinates =
-    GeoJSON.Position
-    | GeoJSON.Position[]
-    | GeoJSON.Position[][]
-
-export type CoordPoint = GeoJSON.Position;
-export type CoordLinestring = GeoJSON.Position[];
-export type CoordPolygon = GeoJSON.Position[][];
-
-export interface IFeature {
-    geometry: JSONGeometry;
-}
 
 // painting
 

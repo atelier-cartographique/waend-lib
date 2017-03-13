@@ -1,11 +1,10 @@
 
-import { Proj } from "proj4";
+import { Proj, InterfaceProjection } from "proj4";
 import { vec2 } from 'gl-matrix';
-import { Extent } from '../Geometry';
 import Transform from '../Transform';
-import { Model, Feature, Layer } from "../Model";
-import { get as getBinder } from '../Bind';
-import { CoordPolygon, CoordLinestring } from "../waend";
+import { Model } from "../Model";
+import { CoordPolygon, CoordLinestring } from "../Geometry";
+
 
 
 export function getModelName(model: Model) {
@@ -63,7 +62,7 @@ export function vecAdd<T extends (vec2 | number[])>(v1: T, v2: T, a: number): [n
 
 
 export function vecEquals(v1: number[], v2: number[]) {
-    return (exports.vecDist(v1, v2) < Number.EPSILON);
+    return (vecDist(v1, v2) < Number.EPSILON);
 }
 
 
@@ -136,7 +135,7 @@ export const lineFloor = (coordinates: CoordLinestring) => {
 
 // GEO
 
-export const Proj3857 = Proj('EPSG:3857');
+export const Proj3857: InterfaceProjection = Proj('EPSG:3857');
 
 export function projectExtent(extent: number[], proj = Proj3857) {
     const min = proj.forward(extent.slice(0, 2));
@@ -151,10 +150,7 @@ export function unprojectExtent(extent: number[], proj = Proj3857) {
 }
 
 
-function addExtent(feature: Feature, extent: Extent) {
-    const geom = feature.getGeometry();
-    extent.add(geom);
-}
+
 
 export const polygonProject = (coordinates: CoordPolygon) => {
     for (let i = 0; i < coordinates.length; i++) {
@@ -175,26 +171,26 @@ export const lineProject = (coordinates: CoordLinestring) => {
 
 //
 
-export function layerExtent(layer: Layer) {
-    const path = layer.getPath();
+// export function layerExtent(layer: Layer) {
+//     const path = layer.getPath();
 
-    return (
-        getBinder()
-            .getFeatures(path[0], path[1], path[2])
-            .then(features => {
-                let extent;
+//     return (
+//         getBinder()
+//             .getFeatures(path[0], path[1], path[2])
+//             .then(features => {
+//                 let extent;
 
-                for (const feature of features) {
-                    if (extent) {
-                        addExtent(feature, extent);
-                    }
-                    else {
-                        extent = feature.getGeometry().getExtent();
-                    }
-                }
+//                 for (const feature of features) {
+//                     if (extent) {
+//                         addExtent(feature, extent);
+//                     }
+//                     else {
+//                         extent = feature.getGeometry().getExtent();
+//                     }
+//                 }
 
-                return extent;
-            })
-    );
-}
+//                 return extent;
+//             })
+//     );
+// }
 

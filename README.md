@@ -1,4 +1,4 @@
 # waend-lib
 
-this is supposed to be shared between waend components as submodules
+Library to be consumed by parts of the waend platform
 

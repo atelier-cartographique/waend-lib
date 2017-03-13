@@ -3,10 +3,10 @@ import * as debug from 'debug';
 const logger = debug('waend:Mutex');
 
 
-type Unlock = () => void;
+export type Unlock = () => void;
 type Resolver = (a: (b: Unlock) => void, c: (d: Error) => void) => void;
 
-class Mutex extends EventEmitter {
+export default class Mutex extends EventEmitter {
 
     private queue: number;
 
@@ -55,4 +55,3 @@ class Mutex extends EventEmitter {
 
 }
 
-export default Mutex;
