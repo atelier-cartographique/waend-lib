@@ -22,7 +22,7 @@
     "url": "https://github.com/atelier-cartographique/waend-lib/issues"
   },
   "homepage": "https://github.com/atelier-cartographique/waend-lib#readme",
-  "devDependencies": {
+  "dependencies": {
     "@turf/turf": "^3.12.2",
     "@types/bluebird": "^3.5.0",
     "@types/debug": "0.0.29",
