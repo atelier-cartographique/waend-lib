@@ -6,3 +6,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./Model"));
 __export(require("./Stream"));
 __export(require("./Geometry"));
+__export(require("./Transform"));

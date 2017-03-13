@@ -88,7 +88,7 @@ export class Matrix {
 /**
 * Transformation
 */
-class Transform {
+export class Transform {
     private m: Matrix;
 
     static fromFlatMatrix(fm: number[]) {
@@ -258,4 +258,3 @@ class Transform {
 
 }
 
-export default Transform;

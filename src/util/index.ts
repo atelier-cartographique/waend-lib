@@ -1,7 +1,7 @@
 
 import { Proj, InterfaceProjection } from "proj4";
 import { vec2 } from 'gl-matrix';
-import Transform from '../Transform';
+import { Transform } from '../Transform';
 import { Model } from "../Model";
 import { CoordPolygon, CoordLinestring } from "../Geometry";
 

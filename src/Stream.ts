@@ -28,7 +28,7 @@ export type PackPage = SpanPack[];
 
 
 
-export default class Stream extends EventEmitter {
+export class Stream extends EventEmitter {
     private entries: SpanPack[];
     private openStatus: Status;
 

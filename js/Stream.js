@@ -58,5 +58,5 @@ class Stream extends events_1.EventEmitter {
         return entries;
     }
 }
-exports.default = Stream;
+exports.Stream = Stream;
 ;

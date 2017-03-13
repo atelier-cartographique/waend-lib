@@ -181,4 +181,4 @@ class Transform {
         return f;
     }
 }
-exports.default = Transform;
+exports.Transform = Transform;

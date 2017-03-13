@@ -13,7 +13,7 @@ export interface Span {
 }
 export declare type SpanPack = Span[];
 export declare type PackPage = SpanPack[];
-export default class Stream extends EventEmitter {
+export declare class Stream extends EventEmitter {
     private entries;
     private openStatus;
     constructor(status?: Status);

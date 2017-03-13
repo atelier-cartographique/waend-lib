@@ -2,7 +2,7 @@
 /// <reference types="proj4" />
 import { InterfaceProjection } from "proj4";
 import { vec2 } from 'gl-matrix';
-import Transform from '../Transform';
+import { Transform } from '../Transform';
 import { Model } from "../Model";
 export declare function getModelName(model: Model): string;
 export declare function copy<T>(data: T): T;

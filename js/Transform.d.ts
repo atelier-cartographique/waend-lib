@@ -11,7 +11,7 @@ export declare class Matrix {
     mul(o: Matrix): this;
     inverse(): Matrix;
 }
-declare class Transform {
+export declare class Transform {
     private m;
     static fromFlatMatrix(fm: number[]): Transform;
     constructor(t?: Transform);
@@ -29,4 +29,3 @@ declare class Transform {
     mapVec2<T extends (vec2 | number[])>(v: T): T;
     mapVec2Fn(name?: string): <T extends number[] | vec2>(v: T) => T;
 }
-export default Transform;
