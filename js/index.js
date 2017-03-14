@@ -7,6 +7,7 @@ __export(require("./BaseSource"));
 __export(require("./Geometry"));
 __export(require("./Stream"));
 __export(require("./Transform"));
+__export(require("./Config"));
 __export(require("./Model"));
-__export(require("./Worker"));
 __export(require("./Mutex"));
+__export(require("./Worker"));

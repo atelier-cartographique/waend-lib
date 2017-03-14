@@ -7,9 +7,10 @@ export * from './BaseSource';
 export * from './Geometry';
 export * from './Stream';
 export * from './Transform';
+export * from "./Config";
 export * from "./Model";
-export * from "./Worker";
 export * from "./Mutex";
+export * from "./Worker";
 
 
 // painting
