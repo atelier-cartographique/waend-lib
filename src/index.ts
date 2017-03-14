@@ -9,6 +9,7 @@ export * from './Stream';
 export * from './Transform';
 export * from "./Model";
 export * from "./Worker";
+export * from "./Mutex";
 
 
 // painting

@@ -6,7 +6,7 @@ const logger = debug('waend:Mutex');
 export type Unlock = () => void;
 type Resolver = (a: (b: Unlock) => void, c: (d: Error) => void) => void;
 
-export default class Mutex extends EventEmitter {
+export class Mutex extends EventEmitter {
 
     private queue: number;
 

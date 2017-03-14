@@ -39,4 +39,4 @@ class Mutex extends events_1.EventEmitter {
         return Promise.resolve(unlock);
     }
 }
-exports.default = Mutex;
+exports.Mutex = Mutex;

@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
 export declare type Unlock = () => void;
-export default class Mutex extends EventEmitter {
+export declare class Mutex extends EventEmitter {
     private queueLength;
     private queue;
     constructor(queueLength?: number);

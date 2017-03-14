@@ -5,6 +5,7 @@ export * from './Stream';
 export * from './Transform';
 export * from "./Model";
 export * from "./Worker";
+export * from "./Mutex";
 export declare type ImageAdjust = 'none' | 'fit' | 'cover';
 export interface ImageOptions {
     image: string;
