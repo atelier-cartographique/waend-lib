@@ -10,6 +10,7 @@ export interface Span {
     text: string;
     fragment?: Element;
     commands?: string[];
+    json?: string;
 }
 export declare type SpanPack = Span[];
 export declare type PackPage = SpanPack[];
