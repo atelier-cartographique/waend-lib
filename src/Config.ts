@@ -16,7 +16,7 @@ export const getconfig: (a: string) => Promise<string> =
         }
 
         return (
-            fetch(`/api/config/${key}`)
+            fetch(`/config/${key}`)
                 .then((response) => {
                     if (!response.ok) {
                         throw (new Error(`FaildConfig ${key}`));

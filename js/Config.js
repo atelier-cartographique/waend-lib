@@ -5,7 +5,7 @@ exports.getconfig = (key) => {
     if (key in store) {
         return Promise.resolve(store[key]);
     }
-    return (fetch(`/api/config/${key}`)
+    return (fetch(`/config/${key}`)
         .then((response) => {
         if (!response.ok) {
             throw (new Error(`FaildConfig ${key}`));
