@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const events_1 = require("events");
+const debug = require("debug");
+const log = debug('waend:Worker');
 exports.EventRenderFrame = 'render:frame';
 exports.EventRenderInit = 'render:init';
 exports.EventRenderUpdate = 'render:update';
@@ -10,6 +12,7 @@ class WaendWorker extends events_1.EventEmitter {
         this.url = url;
     }
     post(message) {
+        log(`send ${message.name}`);
         this.worker.postMessage(message);
     }
     start() {
@@ -24,6 +27,7 @@ class WaendWorker extends events_1.EventEmitter {
     onMessageHandler() {
         const handler = (event) => {
             const data = event.data;
+            log(`recv ${data.name} (${data.id})`);
             switch (data.name) {
                 case 'ack':
                     this.emit(data.id);

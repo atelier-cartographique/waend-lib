@@ -2,7 +2,9 @@
 import { EventEmitter } from 'events';
 import { ModelData } from "./Model";
 import { PainterCommand } from "./index";
+import * as debug from 'debug';
 
+const log = debug('waend:Worker');
 
 export const EventRenderFrame = 'render:frame';
 export interface MessageFrame {
@@ -52,6 +54,7 @@ export class WaendWorker extends EventEmitter {
 
 
     post<T extends TypedMessage>(message: T) {
+        log(`send ${message.name}`);
         this.worker.postMessage(message);
     }
 
@@ -72,6 +75,8 @@ export class WaendWorker extends EventEmitter {
     onMessageHandler() {
         const handler = (event: MessageEvent) => {
             const data = <Response>event.data;
+            log(`recv ${data.name} (${data.id})`);
+
             switch (data.name) {
                 case 'ack':
                     // emitting id allows for simple worker.once(id)
