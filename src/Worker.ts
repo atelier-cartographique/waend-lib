@@ -14,6 +14,12 @@ export interface MessageFrame {
     transform: number[];
 }
 
+export const EventCancelFrame = 'render:cancel';
+export interface MessageCancel {
+    name: 'render:cancel';
+    id: string;
+}
+
 export const EventRenderInit = 'render:init';
 export interface MessageInit {
     name: 'render:init';

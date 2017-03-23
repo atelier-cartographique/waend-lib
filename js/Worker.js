@@ -4,6 +4,7 @@ const events_1 = require("events");
 const debug = require("debug");
 const log = debug('waend:Worker');
 exports.EventRenderFrame = 'render:frame';
+exports.EventCancelFrame = 'render:cancel';
 exports.EventRenderInit = 'render:init';
 exports.EventRenderUpdate = 'render:update';
 class WaendWorker extends events_1.EventEmitter {

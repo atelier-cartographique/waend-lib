@@ -9,6 +9,11 @@ export interface MessageFrame {
     extent: number[];
     transform: number[];
 }
+export declare const EventCancelFrame = "render:cancel";
+export interface MessageCancel {
+    name: 'render:cancel';
+    id: string;
+}
 export declare const EventRenderInit = "render:init";
 export interface MessageInit {
     name: 'render:init';
