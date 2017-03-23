@@ -26,7 +26,7 @@ export interface MessageUpdate {
     models: ModelData[];
     ack: string;
 }
-export declare type TypedMessage = MessageFrame | MessageInit | MessageUpdate;
+export declare type TypedMessage = MessageFrame | MessageCancel | MessageInit | MessageUpdate;
 export interface ResponseAck {
     name: 'ack';
     id: string;

@@ -34,7 +34,7 @@ export interface MessageUpdate {
     ack: string;
 }
 
-export type TypedMessage = MessageFrame | MessageInit | MessageUpdate;
+export type TypedMessage = MessageFrame | MessageCancel | MessageInit | MessageUpdate;
 
 export interface ResponseAck {
     name: 'ack',
