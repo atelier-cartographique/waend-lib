@@ -30,13 +30,11 @@
     "@types/gl-matrix": "^2.2.34",
     "@types/lodash": "^4.14.55",
     "@types/node": "^7.0.8",
-    "@types/proj4": "atelier-cartographique/typings-proj4",
     "@types/rbush": "^2.0.2",
     "bluebird": "^3.5.0",
     "debug": "^2.6.1",
     "gl-matrix": "^2.3.2",
     "lodash": "^4.17.4",
-    "proj4": "^2.4.3",
     "rbush": "^2.0.1"
   }
 }
