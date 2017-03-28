@@ -22,6 +22,7 @@
  *  along with waend-lib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import * as Promise from 'bluebird';
 import { EventEmitter } from 'events';
 import * as debug from 'debug';
 const logger = debug('waend:Mutex');

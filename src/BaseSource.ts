@@ -58,7 +58,8 @@ export class BaseSource<T extends GeoModel> extends EventEmitter {
         this.index[f.id] = this.features.length - 1;
         if (!skipSpatialIndex) {
             const geom = f.getGeometry();
-            const extent = Object.assign({ id: f.id }, geom.getExtent().getDictionary());
+            const baseExtent = geom.getExtent().getDictionary();
+            const extent = { id: f.id, ...baseExtent };
             this.tree.insert(extent);
         }
         this.emit('add', f);

@@ -1,42 +1,58 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-const events_1 = require("events");
-const debug = require("debug");
-const logger = debug('waend:Mutex');
-class Mutex extends events_1.EventEmitter {
-    constructor(queueLength = 128) {
-        super();
-        this.queueLength = queueLength;
-        this.queue = 0;
-        this.setMaxListeners(this.queueLength);
+var Promise = require("bluebird");
+var events_1 = require("events");
+var debug = require("debug");
+var logger = debug('waend:Mutex');
+var Mutex = (function (_super) {
+    __extends(Mutex, _super);
+    function Mutex(queueLength) {
+        if (queueLength === void 0) { queueLength = 128; }
+        var _this = _super.call(this) || this;
+        _this.queueLength = queueLength;
+        _this.queue = 0;
+        _this.setMaxListeners(_this.queueLength);
+        return _this;
     }
-    get() {
+    Mutex.prototype.get = function () {
+        var _this = this;
         logger('mutex.get', this.queue);
-        const unlock = () => {
-            logger('mutex.unlock', this.queue);
-            this.queue -= 1;
-            this.emit('unlock', this.queue);
+        var unlock = function () {
+            logger('mutex.unlock', _this.queue);
+            _this.queue -= 1;
+            _this.emit('unlock', _this.queue);
         };
         if (this.queue > 0) {
-            const resolver = (resolve, reject) => {
-                if (this.queue >= this.queueLength) {
+            var resolver = function (resolve, reject) {
+                if (_this.queue >= _this.queueLength) {
                     return reject(new Error('QueueLengthExceeded'));
                 }
-                const index = this.queue;
-                this.queue += 1;
-                logger('mutex.queue', this.queue);
-                const listener = (q) => {
+                var index = _this.queue;
+                _this.queue += 1;
+                logger('mutex.queue', _this.queue);
+                var listener = function (q) {
                     if (q <= index) {
-                        this.removeListener('unlock', listener);
+                        _this.removeListener('unlock', listener);
                         resolve(unlock);
                     }
                 };
-                this.on('unlock', listener);
+                _this.on('unlock', listener);
             };
             return (new Promise(resolver));
         }
         this.queue += 1;
         return Promise.resolve(unlock);
-    }
-}
+    };
+    return Mutex;
+}(events_1.EventEmitter));
 exports.Mutex = Mutex;

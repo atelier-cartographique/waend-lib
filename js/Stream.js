@@ -1,62 +1,77 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-const events_1 = require("events");
-const Promise = require("bluebird");
+var events_1 = require("events");
+var Promise = require("bluebird");
 var Status;
 (function (Status) {
     Status[Status["Open"] = 0] = "Open";
     Status[Status["Close"] = 1] = "Close";
 })(Status = exports.Status || (exports.Status = {}));
-class Stream extends events_1.EventEmitter {
-    constructor(status = Status.Open) {
-        super();
-        this.entries = [];
-        this.openStatus = status;
+var Stream = (function (_super) {
+    __extends(Stream, _super);
+    function Stream(status) {
+        if (status === void 0) { status = Status.Open; }
+        var _this = _super.call(this) || this;
+        _this.entries = [];
+        _this.openStatus = status;
+        return _this;
     }
-    open() {
+    Stream.prototype.open = function () {
         this.openStatus = Status.Open;
-    }
-    close() {
+    };
+    Stream.prototype.close = function () {
         this.openStatus = Status.Close;
-    }
-    isOpened() {
+    };
+    Stream.prototype.isOpened = function () {
         return (this.openStatus === Status.Open);
-    }
-    write(pack) {
+    };
+    Stream.prototype.write = function (pack) {
         if (this.isOpened()) {
             this.entries.push(pack);
             this.emit('data', pack);
         }
-    }
-    read() {
+    };
+    Stream.prototype.read = function () {
+        var _this = this;
         if (this.isOpened) {
-            const entry = this.entries.shift();
+            var entry = this.entries.shift();
             if (entry) {
                 return Promise.resolve(entry);
             }
             else {
-                const resolver = (resolve) => {
-                    this.once('data', (entry) => {
+                var resolver = function (resolve) {
+                    _this.once('data', function (entry) {
                         resolve(entry);
-                        this.entries.shift();
+                        _this.entries.shift();
                     });
                 };
                 return (new Promise(resolver));
             }
         }
         return Promise.reject(new Error('stream is closed'));
-    }
-    readSync() {
+    };
+    Stream.prototype.readSync = function () {
         if (this.isOpened()) {
             return this.entries.shift();
         }
         return null;
-    }
-    dump() {
-        const entries = this.entries;
+    };
+    Stream.prototype.dump = function () {
+        var entries = this.entries;
         this.entries = [];
         return entries;
-    }
-}
+    };
+    return Stream;
+}(events_1.EventEmitter));
 exports.Stream = Stream;
 ;

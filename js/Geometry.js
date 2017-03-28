@@ -1,7 +1,17 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-const turf_1 = require("@turf/turf");
-const helpers_1 = require("@turf/helpers");
+var turf_1 = require("@turf/turf");
+var helpers_1 = require("@turf/helpers");
 function copy(data) {
     return JSON.parse(JSON.stringify(data));
 }
@@ -13,8 +23,8 @@ function geomToFeature(geom) {
     };
 }
 ;
-class Geometry {
-    constructor(data) {
+var Geometry = (function () {
+    function Geometry(data) {
         if (data instanceof Geometry) {
             this.geometry = copy(data.geometry);
         }
@@ -28,49 +38,65 @@ class Geometry {
             throw (new Error('CanNotBuildGeometry'));
         }
     }
-    clone() {
+    Geometry.prototype.clone = function () {
         return (new Geometry(this));
-    }
-    getType() {
+    };
+    Geometry.prototype.getType = function () {
         return this.geometry.type;
-    }
-    getCoordinates() {
+    };
+    Geometry.prototype.getCoordinates = function () {
         return copy(this.geometry.coordinates);
-    }
-    getExtent() {
+    };
+    Geometry.prototype.getExtent = function () {
         return (new Extent(turf_1.bbox(geomToFeature(this.geometry))));
-    }
-    toGeoJSON() {
+    };
+    Geometry.prototype.toGeoJSON = function () {
         return copy(this.geometry);
-    }
-}
+    };
+    return Geometry;
+}());
 exports.Geometry = Geometry;
-class Point extends Geometry {
-    getCoordinates() {
-        return copy(this.geometry.coordinates);
+var Point = (function (_super) {
+    __extends(Point, _super);
+    function Point() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-}
+    Point.prototype.getCoordinates = function () {
+        return copy(this.geometry.coordinates);
+    };
+    return Point;
+}(Geometry));
 exports.Point = Point;
-class LineString extends Geometry {
-    getCoordinates() {
-        return copy(this.geometry.coordinates);
+var LineString = (function (_super) {
+    __extends(LineString, _super);
+    function LineString() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    appendCoordinate(opt_point) {
-        const p = new Point(opt_point);
-        const geometry = this.geometry;
-        const coords = p.getCoordinates();
+    LineString.prototype.getCoordinates = function () {
+        return copy(this.geometry.coordinates);
+    };
+    LineString.prototype.appendCoordinate = function (opt_point) {
+        var p = new Point(opt_point);
+        var geometry = this.geometry;
+        var coords = p.getCoordinates();
         geometry.coordinates.push(coords);
-    }
-}
+    };
+    return LineString;
+}(Geometry));
 exports.LineString = LineString;
-class Polygon extends Geometry {
-    getCoordinates() {
-        return copy(this.geometry.coordinates);
+var Polygon = (function (_super) {
+    __extends(Polygon, _super);
+    function Polygon() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-}
+    Polygon.prototype.getCoordinates = function () {
+        return copy(this.geometry.coordinates);
+    };
+    return Polygon;
+}(Geometry));
 exports.Polygon = Polygon;
-class Extent {
-    constructor(extent) {
+var Extent = (function () {
+    function Extent(extent) {
         if (extent instanceof Extent) {
             this.extent = extent.getArray();
         }
@@ -79,35 +105,35 @@ class Extent {
         }
         else if (('top' in extent) && ('left' in extent)
             && ('right' in extent) && ('bottom' in extent)) {
-            const e = extent;
+            var e = extent;
             this.extent = [e.left, e.top, e.right, e.bottom];
         }
         else {
             this.extent = copy(extent);
         }
     }
-    getArray() {
+    Extent.prototype.getArray = function () {
         return copy(this.extent);
-    }
-    getCoordinates() {
+    };
+    Extent.prototype.getCoordinates = function () {
         return copy(this.extent);
-    }
-    getDictionary() {
+    };
+    Extent.prototype.getDictionary = function () {
         return {
             minX: this.extent[0],
             minY: this.extent[1],
             maxX: this.extent[2],
             maxY: this.extent[3]
         };
-    }
-    clone() {
+    };
+    Extent.prototype.clone = function () {
         return (new Extent(this));
-    }
-    toPolygon() {
+    };
+    Extent.prototype.toPolygon = function () {
         return (new Polygon(turf_1.bboxPolygon(this.extent)));
-    }
-    normalize() {
-        let tmp;
+    };
+    Extent.prototype.normalize = function () {
+        var tmp;
         if (this.extent[0] > this.extent[2]) {
             tmp = this.extent[0];
             this.extent[0] = this.extent[2];
@@ -119,10 +145,10 @@ class Extent {
             this.extent[3] = tmp;
         }
         return this;
-    }
-    intersects(v) {
-        const r = v;
-        const e = this.extent;
+    };
+    Extent.prototype.intersects = function (v) {
+        var r = v;
+        var e = this.extent;
         if (2 === v.length) {
             r.push(v[0]);
             r.push(v[1]);
@@ -131,32 +157,32 @@ class Extent {
             && r[0] <= e[2]
             && e[1] <= r[3]
             && r[1] <= e[3]);
-    }
-    add(extent) {
+    };
+    Extent.prototype.add = function (extent) {
         extent = (extent instanceof Extent) ? extent : new Extent(extent);
         this.extent[0] = Math.min(this.extent[0], extent.extent[0]);
         this.extent[1] = Math.min(this.extent[1], extent.extent[1]);
         this.extent[2] = Math.max(this.extent[2], extent.extent[2]);
         this.extent[3] = Math.max(this.extent[3], extent.extent[3]);
         return this;
-    }
-    bound(optExtent) {
-        const e = (new Extent(optExtent)).getCoordinates();
-        const result = new Array(4);
+    };
+    Extent.prototype.bound = function (optExtent) {
+        var e = (new Extent(optExtent)).getCoordinates();
+        var result = new Array(4);
         result[0] = Math.max(e[0], this.extent[0]);
         result[1] = Math.max(e[1], this.extent[1]);
         result[2] = Math.min(e[2], this.extent[2]);
         result[3] = Math.min(e[3], this.extent[3]);
         return (new Extent(result));
-    }
-    buffer(value) {
-        const w = this.getWidth();
-        const h = this.getHeight();
-        const d = Math.sqrt((w * w) + (h * h));
-        const dn = d + value;
-        const wn = w * (dn / d);
-        const hn = h * (dn / d);
-        const c = this.getCenter().getCoordinates();
+    };
+    Extent.prototype.buffer = function (value) {
+        var w = this.getWidth();
+        var h = this.getHeight();
+        var d = Math.sqrt((w * w) + (h * h));
+        var dn = d + value;
+        var wn = w * (dn / d);
+        var hn = h * (dn / d);
+        var c = this.getCenter().getCoordinates();
         this.extent = [
             c[0] - (wn / 2),
             c[1] - (hn / 2),
@@ -164,69 +190,70 @@ class Extent {
             c[1] + (hn / 2)
         ];
         return this;
-    }
-    maxSquare() {
-        const w = this.getWidth();
-        const h = this.getHeight();
+    };
+    Extent.prototype.maxSquare = function () {
+        var w = this.getWidth();
+        var h = this.getHeight();
         if (w < h) {
-            const bw = (h - w) / 2;
+            var bw = (h - w) / 2;
             this.extent[0] -= bw;
             this.extent[2] += bw;
         }
         else if (h < w) {
-            const bh = (w - h) / 2;
+            var bh = (w - h) / 2;
             this.extent[1] -= bh;
             this.extent[3] += bh;
         }
         return this;
-    }
-    minSquare() {
-    }
-    getHeight() {
+    };
+    Extent.prototype.minSquare = function () {
+    };
+    Extent.prototype.getHeight = function () {
         return Math.abs(this.extent[3] - this.extent[1]);
-    }
-    getWidth() {
+    };
+    Extent.prototype.getWidth = function () {
         return Math.abs(this.extent[2] - this.extent[0]);
-    }
-    getBottomLeft() {
-        const p = helpers_1.point([this.extent[0], this.extent[1]]);
+    };
+    Extent.prototype.getBottomLeft = function () {
+        var p = helpers_1.point([this.extent[0], this.extent[1]]);
         return (new Point(p));
-    }
-    getBottomRight() {
-        const p = helpers_1.point([this.extent[2], this.extent[1]]);
+    };
+    Extent.prototype.getBottomRight = function () {
+        var p = helpers_1.point([this.extent[2], this.extent[1]]);
         return (new Point(p));
-    }
-    getTopLeft() {
-        const p = helpers_1.point([this.extent[0], this.extent[3]]);
+    };
+    Extent.prototype.getTopLeft = function () {
+        var p = helpers_1.point([this.extent[0], this.extent[3]]);
         return (new Point(p));
-    }
-    getTopRight() {
-        const p = helpers_1.point([this.extent[2], this.extent[3]]);
+    };
+    Extent.prototype.getTopRight = function () {
+        var p = helpers_1.point([this.extent[2], this.extent[3]]);
         return (new Point(p));
-    }
-    getCenter() {
-        const p = helpers_1.point([
+    };
+    Extent.prototype.getCenter = function () {
+        var p = helpers_1.point([
             (this.extent[0] + this.extent[2]) / 2,
             (this.extent[1] + this.extent[3]) / 2
         ]);
         return (new Point(p));
-    }
-    getSurface() {
+    };
+    Extent.prototype.getSurface = function () {
         return this.getHeight() * this.getWidth();
-    }
-}
+    };
+    return Extent;
+}());
 exports.Extent = Extent;
 function toDMS(lat, lng) {
-    let latD;
-    let latM;
-    let latS;
-    let lngD;
-    let lngM;
-    let lngS;
-    let latAbs;
-    let lngAbs;
-    let latAz;
-    let lngAz;
+    var latD;
+    var latM;
+    var latS;
+    var lngD;
+    var lngM;
+    var lngS;
+    var latAbs;
+    var lngAbs;
+    var latAz;
+    var lngAz;
     latAbs = Math.abs(lat);
     lngAbs = Math.abs(lng);
     latAz = (lat < 0) ? 'S' : 'N';
@@ -238,8 +265,8 @@ function toDMS(lat, lng) {
     lngM = Math.floor(60 * (lngAbs - lngD));
     lngS = 3600 * (lngAbs - lngD - lngM / 60);
     return [
-        `${latD}°`, `${latM}'`, `${latS.toPrecision(4)}'`, latAz,
-        `${lngD}°`, `${lngM}'`, `${lngS.toPrecision(4)}'`, lngAz
+        latD + "\u00B0", latM + "'", latS.toPrecision(4) + "'", latAz,
+        lngD + "\u00B0", lngM + "'", lngS.toPrecision(4) + "'", lngAz
     ].join(' ');
 }
 exports.toDMS = toDMS;

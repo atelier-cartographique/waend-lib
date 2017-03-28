@@ -22,6 +22,8 @@
  *  along with waend-lib.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import * as Promise from 'bluebird';
+
 interface ConfigStore {
     [key: string]: string;
 }
@@ -30,25 +32,25 @@ const store: ConfigStore = {};
 
 
 
-export const getconfig: (a: string) => Promise<string> =
+export const getconfig: (a: string) => PromiseLike<string> =
     (key) => {
 
         if (key in store) {
             return Promise.resolve(store[key]);
         }
 
-        return (
-            fetch(`/config/${key}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw (new Error(`FaildConfig ${key}`));
-                    }
-                    return response.text();
-                })
-                .then<string>((text) => {
-                    store[key] = text;
-                    return text;
-                })
-        );
+        const result = fetch(`/config/${key}`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw (new Error(`FaildConfig ${key}`));
+                }
+                return response.text();
+            })
+            .then<string>((text) => {
+                store[key] = text;
+                return text;
+            });
+
+        return result;
 
     }

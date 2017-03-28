@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const gl_matrix_1 = require("gl-matrix");
-class Matrix {
-    constructor(a, b, c, d, e, f) {
+var gl_matrix_1 = require("gl-matrix");
+var Matrix = (function () {
+    function Matrix(a, b, c, d, e, f) {
         if (0 === arguments.length) {
             this.m = gl_matrix_1.mat3.create();
         }
@@ -18,22 +18,30 @@ class Matrix {
             this.parseFlat(a, b, c, d, e, f);
         }
     }
-    get mat() {
-        return gl_matrix_1.mat3.clone(this.m);
-    }
-    get matRef() {
-        return this.m;
-    }
-    clone() {
-        const mx = new Matrix();
+    Object.defineProperty(Matrix.prototype, "mat", {
+        get: function () {
+            return gl_matrix_1.mat3.clone(this.m);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Matrix.prototype, "matRef", {
+        get: function () {
+            return this.m;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Matrix.prototype.clone = function () {
+        var mx = new Matrix();
         mx.m = gl_matrix_1.mat3.clone(this.m);
         return mx;
-    }
-    parseFlat(a, b, c, d, e, f) {
+    };
+    Matrix.prototype.parseFlat = function (a, b, c, d, e, f) {
         this.m = gl_matrix_1.mat3.fromValues(a, b, 0, c, d, 0, e, f, 1);
-    }
-    flat() {
-        const fm = new Array(6);
+    };
+    Matrix.prototype.flat = function () {
+        var fm = new Array(6);
         fm[0] = this.m[0];
         fm[1] = this.m[1];
         fm[2] = this.m[3];
@@ -41,25 +49,21 @@ class Matrix {
         fm[4] = this.m[6];
         fm[5] = this.m[7];
         return fm;
-    }
-    mul(o) {
+    };
+    Matrix.prototype.mul = function (o) {
         gl_matrix_1.mat3.multiply(this.m, this.m, o.m);
         return this;
-    }
-    inverse() {
-        const inverse = new Matrix();
+    };
+    Matrix.prototype.inverse = function () {
+        var inverse = new Matrix();
         gl_matrix_1.mat3.invert(inverse.m, this.m);
         return inverse;
-    }
-}
+    };
+    return Matrix;
+}());
 exports.Matrix = Matrix;
-class Transform {
-    static fromFlatMatrix(fm) {
-        const t = new Transform();
-        t.m = new Matrix(fm);
-        return t;
-    }
-    constructor(t) {
+var Transform = (function () {
+    function Transform(t) {
         if (t) {
             this.m = t.m.clone();
         }
@@ -67,10 +71,15 @@ class Transform {
             this.m = new Matrix();
         }
     }
-    flatMatrix() {
+    Transform.fromFlatMatrix = function (fm) {
+        var t = new Transform();
+        t.m = new Matrix(fm);
+        return t;
+    };
+    Transform.prototype.flatMatrix = function () {
         return this.m.flat();
-    }
-    toString() {
+    };
+    Transform.prototype.toString = function () {
         function decimalAdjust(type, value, exp) {
             if (typeof exp === 'undefined' || +exp === 0) {
                 return Math[type](value);
@@ -81,36 +90,36 @@ class Transform {
                 return NaN;
             }
             value = value.toString().split('e');
-            value = Math[type](+(`${value[0]}e${value[1] ? (+value[1] - exp) : -exp}`));
+            value = Math[type](+(value[0] + "e" + (value[1] ? (+value[1] - exp) : -exp)));
             value = value.toString().split('e');
-            return +(`${value[0]}e${value[1] ? (+value[1] + exp) : exp}`);
+            return +(value[0] + "e" + (value[1] ? (+value[1] + exp) : exp));
         }
         function adjust(type, a, exp) {
-            for (let i = 0; i < a.length; i++) {
+            for (var i = 0; i < a.length; i++) {
                 a[i] = decimalAdjust(type, a[i], exp);
             }
             return a;
         }
-        const f = adjust('round', this.m.flat(), -5);
-        const s = `<Matrix: (${f.join(', ')})>`;
+        var f = adjust('round', this.m.flat(), -5);
+        var s = "<Matrix: (" + f.join(', ') + ")>";
         return s;
-    }
-    reset(t) {
+    };
+    Transform.prototype.reset = function (t) {
         this.m = t.m.clone();
         return this;
-    }
-    clone() {
-        const t = new Transform();
+    };
+    Transform.prototype.clone = function () {
+        var t = new Transform();
         this.reset.call(t, this);
         return t;
-    }
-    inverse() {
-        const inverse_m = this.m.inverse();
-        const inverse = new Transform();
+    };
+    Transform.prototype.inverse = function () {
+        var inverse_m = this.m.inverse();
+        var inverse = new Transform();
         inverse.m = inverse_m;
         return inverse;
-    }
-    multiply(t) {
+    };
+    Transform.prototype.multiply = function (t) {
         if (t instanceof Matrix) {
             this.m.mul(t);
         }
@@ -118,13 +127,13 @@ class Transform {
             this.m.mul(t.m);
         }
         return this;
-    }
-    translate(tx, ty) {
+    };
+    Transform.prototype.translate = function (tx, ty) {
         gl_matrix_1.mat3.translate(this.m.matRef, this.m.mat, [tx, ty]);
         return this;
-    }
-    scale(sx, sy, origin) {
-        const sm = new Matrix();
+    };
+    Transform.prototype.scale = function (sx, sy, origin) {
+        var sm = new Matrix();
         if (undefined !== origin) {
             gl_matrix_1.mat3.translate(sm.matRef, sm.mat, [origin[0], origin[1]]);
             gl_matrix_1.mat3.scale(sm.matRef, sm.mat, [sx, sy]);
@@ -135,10 +144,10 @@ class Transform {
         }
         this.m.mul(sm);
         return this;
-    }
-    rotate(r, origin) {
-        const rGrad = r * Math.PI / 180.0;
-        const rm = new Matrix();
+    };
+    Transform.prototype.rotate = function (r, origin) {
+        var rGrad = r * Math.PI / 180.0;
+        var rm = new Matrix();
         if (undefined !== origin) {
             gl_matrix_1.mat3.translate(rm.matRef, rm.mat, [origin[0], origin[1]]);
             gl_matrix_1.mat3.rotate(rm.matRef, rm.mat, rGrad);
@@ -149,24 +158,24 @@ class Transform {
         }
         this.m.mul(rm);
         return this;
-    }
-    getScale() {
+    };
+    Transform.prototype.getScale = function () {
         return [this.m.mat[0], this.m.mat[4]];
-    }
-    getTranslate() {
+    };
+    Transform.prototype.getTranslate = function () {
         return [this.m.mat[6], this.m.mat[7]];
-    }
-    mapVec2(v) {
-        const out = gl_matrix_1.vec2.create();
+    };
+    Transform.prototype.mapVec2 = function (v) {
+        var out = gl_matrix_1.vec2.create();
         gl_matrix_1.vec2.transformMat3(out, v, this.m.mat);
         v[0] = out[0];
         v[1] = out[1];
         return v;
-    }
-    mapVec2Fn(name) {
-        const m = this.m.clone();
-        const f = function (v) {
-            const out = gl_matrix_1.vec2.create();
+    };
+    Transform.prototype.mapVec2Fn = function (name) {
+        var m = this.m.clone();
+        var f = function (v) {
+            var out = gl_matrix_1.vec2.create();
             gl_matrix_1.vec2.transformMat3(out, v, m.mat);
             v[0] = out[0];
             v[1] = out[1];
@@ -179,6 +188,7 @@ class Transform {
             catch (e) { }
         }
         return f;
-    }
-}
+    };
+    return Transform;
+}());
 exports.Transform = Transform;

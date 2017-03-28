@@ -1,19 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const store = {};
-exports.getconfig = (key) => {
+var Promise = require("bluebird");
+var store = {};
+exports.getconfig = function (key) {
     if (key in store) {
         return Promise.resolve(store[key]);
     }
-    return (fetch(`/config/${key}`)
-        .then((response) => {
+    var result = fetch("/config/" + key)
+        .then(function (response) {
         if (!response.ok) {
-            throw (new Error(`FaildConfig ${key}`));
+            throw (new Error("FaildConfig " + key));
         }
         return response.text();
     })
-        .then((text) => {
+        .then(function (text) {
         store[key] = text;
         return text;
-    }));
+    });
+    return result;
 };

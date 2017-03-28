@@ -1,1 +1,1 @@
-export declare const getconfig: (a: string) => Promise<string>;
+export declare const getconfig: (a: string) => PromiseLike<string>;
