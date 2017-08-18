@@ -1,1 +1,3 @@
-export declare const getconfig: (a: string) => PromiseLike<string>;
+/// <reference types="bluebird" />
+import * as Promise from 'bluebird';
+export declare const getconfig: (a: string) => Promise<string>;

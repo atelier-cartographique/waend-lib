@@ -32,25 +32,29 @@ const store: ConfigStore = {};
 
 
 
-export const getconfig: (a: string) => PromiseLike<string> =
+export const getconfig: (a: string) => Promise<string> =
     (key) => {
 
         if (key in store) {
             return Promise.resolve(store[key]);
         }
 
-        const result = fetch(`/config/${key}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw (new Error(`FaildConfig ${key}`));
-                }
-                return response.text();
-            })
-            .then<string>((text) => {
-                store[key] = text;
-                return text;
-            });
 
-        return result;
+        return (
+            new Promise((resolve, reject) => {
+                fetch(`/config/${key}`)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw (new Error(`FaildConfig ${key}`));
+                        }
+                        return response.text();
+                    })
+                    .then((text) => {
+                        store[key] = text;
+                        resolve(text);
+                    })
+                    .catch(reject);
+            })
+        );
 
     }
