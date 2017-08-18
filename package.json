@@ -1,43 +1,43 @@
 {
-  "name": "waend-lib",
-  "version": "1.1.0",
-  "description": "A library for waend applications",
-  "main": "src/index",
-  "typings": "defs/index",
-  "module": "src",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "./node_modules/.bin/tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/atelier-cartographique/waend-lib.git"
-  },
-  "keywords": [
-    "waend"
-  ],
-  "author": "Pierre Marchand",
-  "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/atelier-cartographique/waend-lib/issues"
-  },
-  "homepage": "https://github.com/atelier-cartographique/waend-lib#readme",
-  "dependencies": {
-    "@turf/turf": "^3.12.2",
-    "@types/bluebird": "^3.5.0",
-    "@types/debug": "0.0.29",
-    "@types/geojson": "^1.0.0",
-    "@types/gl-matrix": "^2.2.34",
-    "@types/lodash": "^4.14.55",
-    "@types/node": "^7.0.8",
-    "@types/rbush": "^2.0.2",
-    "bluebird": "^3.5.0",
-    "debug": "^2.6.1",
-    "gl-matrix": "^2.3.2",
-    "lodash": "^4.17.4",
-    "rbush": "^2.0.1"
-  },
-  "devDependencies": {
-    "typescript": "^2.4.2"
-  }
+    "name": "waend-lib",
+    "version": "1.1.0",
+    "description": "A library for waend applications",
+    "main": "defs/index",
+    "typings": "defs/index",
+    "module": "src",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "./node_modules/.bin/tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/atelier-cartographique/waend-lib.git"
+    },
+    "keywords": [
+        "waend"
+    ],
+    "author": "Pierre Marchand",
+    "license": "AGPL-3.0",
+    "bugs": {
+        "url": "https://github.com/atelier-cartographique/waend-lib/issues"
+    },
+    "homepage": "https://github.com/atelier-cartographique/waend-lib#readme",
+    "dependencies": {
+        "@turf/turf": "^3.12.2",
+        "@types/bluebird": "^3.5.0",
+        "@types/debug": "0.0.29",
+        "@types/geojson": "^1.0.0",
+        "@types/gl-matrix": "^2.2.34",
+        "@types/lodash": "^4.14.55",
+        "@types/node": "^7.0.8",
+        "@types/rbush": "^2.0.2",
+        "bluebird": "^3.5.0",
+        "debug": "^2.6.1",
+        "gl-matrix": "^2.3.2",
+        "lodash": "^4.17.4",
+        "rbush": "^2.0.1"
+    },
+    "devDependencies": {
+        "typescript": "^2.4.2"
+    }
 }
